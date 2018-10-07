@@ -35,6 +35,7 @@ class DoubleLinkedList:
             self.tail = self.tail.prev_item
             self.tail.next_item = None
 
+    # add an item at the beginning
     def unshift(self, a):
         new = Item(a, self.head, None)
         # in case of empty list head is tail
@@ -48,6 +49,7 @@ class DoubleLinkedList:
             if self.tail.prev_item is None:
                 self.tail.prev_item = new
 
+    # remove an item from the beginning
     def shift(self):
         if self.head is None:
             print("I'm already empty")
@@ -58,18 +60,21 @@ class DoubleLinkedList:
             self.head = self.head.next_item
             self.head.prev_item = None
 
+    # return the last elem in list
     def last(self):
         if self.head is not None:
             return self.tail.elem
         else:
             return None
 
+    # return the first elem in list
     def first(self):
         if self.head is not None:
             return self.head.elem
         else:
             return None
 
+    #return the length of the list
     def len(self):
         size = 0
         x = self.head
@@ -80,7 +85,8 @@ class DoubleLinkedList:
                 size += 1
                 x = x.next_item
             return size
-
+    
+    # True if list contain elem=a, else: false
     def contains(self, a):
         x = self.head
         if x is None:
@@ -92,7 +98,10 @@ class DoubleLinkedList:
                 x = x.next_item
             return False
 
-    def delete(self, a, k=1):
+    # with no key: delete all the item with elem=a,
+    # with key=n: delete a n times
+    # if n more then real number of a in list, delete only what list have
+    def delete(self, a, k=-1):
         x = self.head
         counter = 0
         if x is None:
@@ -111,30 +120,4 @@ class DoubleLinkedList:
                 x = x.next_item
                 if counter == k:
                     return()
-
-
-a = DoubleLinkedList()
-#a.push(1)
-#a.push(2)
-#b = a
-#a.push(3)
-#print(b.tail.elem)
-a.pop()
-print(a.head, a.tail)
-#a.unshift(1)
-#a.push(5)
-#a.unshift(4)
-#a.push(3)
-#a.push(1)
-#x = a.head
-#while x is not None:
-#    print(x.elem)
-#    x = x.next_item
-#a.delete(1, 5)
-
-#print(a.contains(1))
-#x = a.head
-#while x is not None:
-#    print(x.elem)
-#    x = x.next_item
 

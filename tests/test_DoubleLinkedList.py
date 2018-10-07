@@ -205,7 +205,7 @@ class TestMyClass(unittest.TestCase):
         self.assertEqual(res, 7)
 
     #--------------------------------------
-    # contains(a) testing. There are 3 case:
+    # contains(x) testing. There are 3 case:
     # list is None
     # contains
     # doesn't contain
@@ -223,4 +223,61 @@ class TestMyClass(unittest.TestCase):
         self.assertFalse(a.contains(2))
 
 
+    #-----------------------------------------------
+    # delete(x, key) testing. There are 5 situations:
+    # delete from None
+    # delete(x) all x(key=default), containing in list 
+    # delete(x, n) x containing in list n times:
+    #   n > real
+    #   n <= real
+    # delete x that is not in list (no test of any key, because this test in n > real)
+
+    def test_deleteFromNone(self):
+        a = DoubleLinkedList()
+        res = a.head, a.tail
+        self.assertEqual(res, (None, None))
+
+    def test_deleteAll1InList(self):
+        a = self.list
+        a.delete(1)
+        x = a.head
+        i = 0
+        answer = (23, 'abc', (1, 2), 0, 100)
+        while x is not None:
+            self.assertEqual((x.elem), answer[i])
+            x = x.next_item
+            i += 1
+
+    def test_delete1FiveTimes(self):
+        a = self.list
+        a.delete(1, 5)
+        x = a.head
+        i = 0
+        answer = (23, 'abc', (1, 2), 0, 100)
+        while x is not None:
+            self.assertEqual((x.elem), answer[i])
+            x = x.next_item
+            i += 1
+
+    def test_delete1OneTime(self):
+        a = self.list
+        a.delete(1, 1)
+        x = a.head
+        i = 0
+        answer = (23, 'abc', (1, 2), 0, 1, 100)
+        while x is not None:
+            self.assertEqual((x.elem), answer[i])
+            x = x.next_item
+            i += 1
+
+    def test_delete2FromList(self):
+        a = self.list
+        a.delete(2, 1)
+        x = a.head
+        i = 0
+        answer = (23, 1, 'abc', (1, 2), 0, 1, 100)
+        while x is not None:
+            self.assertEqual((x.elem), answer[i])
+            x = x.next_item
+            i += 1
 
