@@ -2,7 +2,7 @@
 check all the methods for DoubleLinkedList class
 """
 import unittest
-from app.HW2 import DoubleLinkedList
+from app.hw2 import DoubleLinkedList
 
 class TestDoubleLinkedList1(unittest.TestCase):
     """
