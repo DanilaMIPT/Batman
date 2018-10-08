@@ -74,7 +74,7 @@ class DoubleLinkedList:
         else:
             return None
 
-    #return the length of the list
+    # return the length of the list
     def len(self):
         size = 0
         x = self.head
@@ -85,7 +85,7 @@ class DoubleLinkedList:
                 size += 1
                 x = x.next_item
             return size
-    
+
     # True if list contain elem=a, else: false
     def contains(self, a):
         x = self.head
@@ -120,4 +120,3 @@ class DoubleLinkedList:
                 x = x.next_item
                 if counter == k:
                     return()
-
