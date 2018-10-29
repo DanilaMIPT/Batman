@@ -1,4 +1,5 @@
 node_modules/
+instance/config.py
 vBat/
 *.pyc
 *.swo
