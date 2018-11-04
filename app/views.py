@@ -1,11 +1,16 @@
 from flask import request, abort, jsonify
+import json
+from app import app, jsonrpc
 
-from app import app
-
+@jsonrpc.method('hello')
 @app.route('/<string:name>/')
 @app.route('/')
 def index(name="world"):
     return "Hello, {}!".format( name )
+
+@app.route('/favicon.ico')
+def icon():
+    return
 
 @app.route('/form/', methods=['GET', 'POST'])
 def form():
@@ -22,3 +27,7 @@ def form():
         return rv
         print(request.form)
         abort(404)
+
+@jsonrpc.method('print_name')
+def foo():
+    return {"name": "Ivan"}

@@ -1,6 +1,9 @@
 import flask
 import psycopg2, psycopg2.extras
 import app.instance.config as config
+from app import app
+from flask import signals
+
 
 def get_connection():
     if not hasattr(flask.g, 'dbconn'):
@@ -16,31 +19,30 @@ def get_cursor():
 def query_one(sql, **params):
     with get_cursor() as cur:
         cur.execute(sql, params)
-        result = {}
         return dict(cur.fetchone())
 
 def query_all(sql, **params):
     with get_cursor() as cur:
         cur.execute(sql, params)
         result = cur.fetchall()
-        answer = {}
-        i=1
-        for raw in result:
-            print(raw)
-            answer[i] = dict(raw)
-            i += 1
+        answer = list(map(dict, result))
         return answer
 
 
 def _rollback_db(sender, exception, **extra):
     if hasattr(flask.g, 'dbconn'):
-        conn = flask.g.dbconnconn.rollback()
+        conn = flask.g.dbconn
+        conn.rollback()
         conn.close()
         delattr(flask.g, 'dbconn')
 
-#def _commit_db(sender, ...):
-#    if hasattr(flask.g, 'dbconn'):
-#        conn = flask.g.dbconn
-#        conn.commit()
-#        conn.close()
-#        delattr(flask.g, 'dbconn')
+flask.got_request_exception.connect(_rollback_db, app)
+
+def _commit_db(sender, **extra):
+    if hasattr(flask.g, 'dbconn'):
+        conn = flask.g.dbconn
+        conn.commit()
+        conn.close()
+        delattr(flask.g, 'dbconn')
+
+flask.request_finished.connect(_commit_db, app)

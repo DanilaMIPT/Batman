@@ -1,6 +1,7 @@
 import time, random
 
 def timer( function):
+    print(function.__name__)
     def wrapper_timer( *args, **kwargs):
         print(args, kwargs, function.__name__)
         start_ts = time.time()
@@ -11,19 +12,22 @@ def timer( function):
         return result
     return wrapper_timer
 
-def sleeper (from_, to_):
-    def sleeper_(function):
+def sleeper_(function):
+    print('hello')
+    def sleeper(from_, to_):
+        print(function.__name__, 'hello2')
         def wrapper_sleeper(*args, **kwargs):
             print('sleeper', args, kwargs)
             print(function.__name__)
             time.sleep(random.randint( from_, to_))
             result = function(*args, **kwargs)
+            print('a')
             return result
         return wrapper_sleeper
-    return sleeper_
+    return sleeper(1, 3)
 
+@sleeper_
 @timer
-@sleeper(1, 3)
 def foo(a, b):
     print('Call')
     return a + b

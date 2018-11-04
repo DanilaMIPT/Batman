@@ -54,7 +54,11 @@ a = { 'danila': '1234',
 
 @app.route('/search_users/', methods=['GET'])
 def search_user():
-    if request.method == 'GET':
-        word = request.args.get('word')
-        users = model.search_user(word, 5)
-        return jsonify(users)
+    word = request.args.get('word')
+    users = model.search_user(word, 5)
+    return jsonify(users)
+
+@app.route('/new_chat/')
+def create_chat():
+    a = model.new_chat(3, 4)
+    return jsonify(a)
