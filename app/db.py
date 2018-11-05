@@ -2,7 +2,6 @@ import flask
 import psycopg2, psycopg2.extras
 import app.instance.config as config
 from app import app
-from flask import signals
 
 
 def get_connection():
